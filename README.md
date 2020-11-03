@@ -1,5 +1,7 @@
 # getpr.vim
-Get GitHub's pull request url.
+Get GitHub's pull request URL.
+
+![](https://i.imgur.com/QBtn4LD.gif)
 
 ## Features
 - yank/open pull request url
