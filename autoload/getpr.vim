@@ -44,3 +44,16 @@ function! getpr#open() abort
   endif
   call system(printf('%s %s', s:cmd, url))
 endfunction
+
+function! getpr#yank() abort
+  let url = s:get_url()
+  if empty(url)
+    return
+  endif
+  let reg = '*'
+  if has('linux')
+    let reg = '+'
+  endif
+  call setreg(reg, url)
+  echom 'copied' url
+endfunction
