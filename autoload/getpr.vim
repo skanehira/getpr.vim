@@ -11,21 +11,25 @@ endif
 
 function! s:echo(msg) abort
   echohl ErrorMsg
-  echom a:msg
+  echom '[getpr.vim]' a:msg
   echohl None
 endfunction
 
 function! s:get_url() abort
+  if !executable('getpr')
+    call s:echo('not found "getpr" in your PATH, please install from https://github.com/skanehira/getpr')
+    return
+  endif
   let file = expand('%s')
   if empty(file)
-    call s:echo('[getpr.vim] file name is empty')
+    call s:echo('file name is empty')
     return
   endif
   let line = line('.')
   let blame_line = system(printf('git blame -L %s,%s -- %s', line, line, file))
 
   if blame_line =~ 'fatal\|usage'
-    call s:echo('[getpr.vim] ' .. blame_line)
+    call s:echo(blame_line)
     return
   endif
   if empty(blame_line)
@@ -38,7 +42,7 @@ function! s:get_url() abort
   endif
   let url = system(printf('%s %s', 'getpr', id))->trim()
   if url =~ 'found\|cannot'
-    call s:echo('[getpr.vim] ' .. url)
+    call s:echo(url)
     return
   endif
   return url
