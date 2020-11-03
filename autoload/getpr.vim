@@ -33,7 +33,14 @@ function! s:get_url() abort
     return
   endif
   let id = blame_line->split(' ')[0]
+  if id =~ '\^.*'
+    let id = id->trim('^')
+  endif
   let url = system(printf('%s %s', 'getpr', id))->trim()
+  if url =~ 'found\|cannot'
+    call s:echo('[getpr.vim] ' .. url)
+    return
+  endif
   return url
 endfunction
 
