@@ -22,7 +22,7 @@ function! s:get_url() abort
     return
   endif
   let line = line('.')
-  let blame_line = system(printf('git blame -L %s,%s -- %s', line, line, file))->trim()
+  let blame_line = system(printf('git blame -L %s,%s -- %s', line, line, file))
 
   if blame_line =~ 'fatal\|usage'
     call s:echo('[getpr.vim] ' .. blame_line)
@@ -33,7 +33,7 @@ function! s:get_url() abort
     return
   endif
   let id = blame_line->split(' ')[0]
-  let url = system(printf('%s %s', 'getpr', id))
+  let url = system(printf('%s %s', 'getpr', id))->trim()
   return url
 endfunction
 
