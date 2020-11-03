@@ -23,3 +23,13 @@ repo = 'skanehira/getpr.vim'
 " yank pull request url
 :GetprYank
 ```
+
+`getpr.vim` provides some keymap.
+
+| keymap               | description |
+|----------------------|-------------|
+| `<Plug>(getpr-open)` | open url    |
+| `<Plug>(getpr-yank)` | yank url    |
+
+## Author
+skanehira
