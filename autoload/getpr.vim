@@ -9,6 +9,11 @@ elseif has('win64')
   let s:cmd = 'cmd /c start'
 endif
 
+let s:reg = '*'
+if has('linux')
+  let s:reg = '+'
+endif
+
 function! s:echo(msg) abort
   echohl ErrorMsg
   echom '[getpr.vim]' a:msg
@@ -61,10 +66,6 @@ function! getpr#yank() abort
   if empty(url)
     return
   endif
-  let reg = '*'
-  if has('linux')
-    let reg = '+'
-  endif
-  call setreg(reg, url)
+  call setreg(s:reg, url)
   echom 'copied' url
 endfunction
