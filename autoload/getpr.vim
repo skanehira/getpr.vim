@@ -22,7 +22,7 @@ endfunction
 
 function! s:get_url() abort
   if !executable('getpr')
-    call s:echo('not found "getpr" in your PATH, please install from https://github.com/skanehira/getpr')
+    call s:echo('not found "getpr" in your PATH, please install https://github.com/skanehira/getpr')
     return
   endif
   let file = expand('%s')
@@ -33,7 +33,7 @@ function! s:get_url() abort
   let line = line('.')
   let blame_line = system(printf('git blame -L %s,%s -- %s', line, line, file))
 
-  if blame_line =~ 'fatal\|usage'
+  if blame_line =~? 'fatal\|usage'
     call s:echo(blame_line)
     return
   endif
@@ -42,11 +42,11 @@ function! s:get_url() abort
     return
   endif
   let id = blame_line->split(' ')[0]
-  if id =~ '\^.*'
+  if id =~? '\^.*'
     let id = id->trim('^')
   endif
   let url = system(printf('%s %s', 'getpr', id))->trim()
-  if url =~ 'found\|cannot'
+  if url !~? 'https://.*'
     call s:echo(url)
     return
   endif
