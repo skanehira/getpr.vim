@@ -10,7 +10,7 @@ elseif has('win64')
 endif
 
 let s:reg = '*'
-if has('linux')
+if has('linux') || has('unix')
   let s:reg = '+'
 endif
 
@@ -41,11 +41,11 @@ function! s:get_url() abort
     call s:echo('[getpr.vim] cannot get commit id')
     return
   endif
-  let id = blame_line->split(' ')[0]
+  let id = split(blame_line)[0]
   if id =~? '\^.*'
-    let id = id->trim('^')
+    let id = trim(id, '^')
   endif
-  let url = system(printf('%s %s', 'getpr', id))->trim()
+  let url = trim(system(printf('%s %s', 'getpr', id)))
   if url !~? 'https://.*'
     call s:echo(url)
     return
